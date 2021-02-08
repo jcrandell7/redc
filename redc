@@ -1,0 +1,16 @@
+#!/bin/bash
+
+filenumber=0
+#pwd=$(pwd)
+for i in $(ls);
+        do
+                sox -G $i -r 48000 "$filenumber.mp3" speed 1.5 pitch -700&
+		BACK_PID=$!
+			while kill -0 $BACK_PID ; do
+			echo "Process is still active..."
+			sleep 1
+			done
+	((filenumber++))
+		#Below is something I might use instead of the while loop above
+		#wait $BACK_PID
+        done
